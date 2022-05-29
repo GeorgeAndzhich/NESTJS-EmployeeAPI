@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {Employee, EmployeeDocument} from "./schemas/employee.schema"
 import { CreateEmployeeDto } from "./dto/create-employee.dto";
+import {UpdateEmployeeDto } from "./dto/update-employee.dto";
 
 @Injectable()
 export class EmployeeService
@@ -22,7 +23,7 @@ export class EmployeeService
         await this.employeeModel.deleteOne({id:id}).exec();
     }
 
-    async updateEmployee(id: string, employee: Employee) {
-
+    async updateEmployee(id: string, employee: UpdateEmployeeDto) {
+        return this.employeeModel.updateOne({ id },{$set:{...employee}})
     }
 }
